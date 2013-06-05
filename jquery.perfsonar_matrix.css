@@ -1,0 +1,47 @@
+.pf-m {
+/*table scrolling doesn't update absolute positioned table headers*/
+/*overflow-x: auto;*/
+}
+
+.pf-m .pf-m-colhead {
+height: 65px;
+vertical-align: bottom;
+max-width: 30px;
+}
+
+.pf-m .pf-m-colhead .pf-m-colhead-text {
+-webkit-transform: rotate(-20deg);
+-moz-transform: rotate(-20deg);
+transform: rotate(-20deg);
+
+-webkit-transform-origin: left;
+-moz-transform-origin: left;
+transform-origin: left;
+
+margin-left: 8px;
+margin-top: -15px;
+position: absolute;
+text-rendering: optimizelegibility;
+padding-bottom: 10px;
+}
+
+.pf-m .pf-m-name {
+color: #999;
+}
+
+.pf-m .pf-m-rowhead,
+.pf-m .pf-m-colhead {
+color: #333;
+}
+
+.pf-m .pf-m-colhead-buffer {
+width: 50px;
+}
+
+.pf-m span.label {
+cursor: pointer;
+}
+
+.popover-inner{
+min-width: 600px;
+}
