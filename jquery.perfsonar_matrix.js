@@ -97,7 +97,7 @@
                 trigger: "manual"
             });
             $(this.element).find(".label").click(function() {
-                $(".label").popover("hide");
+                $(".popover").hide();
                 $(this).popover("toggle");
             });
         },
@@ -112,15 +112,27 @@
 
             //figure what to put in front label
             var label_status = "inverse"; //unknown
-            var status = json.statusLabels[cell.result.status];
+            //var status = json.statusLabels[cell.result.status];
+            var label = cell.result.parameters.average;
+            //truncate some numbers
+            if(label != undefined && label.length>7) {
+                var num = label.substr(0,label.length-4);
+                var unit = label.substr(label.length-4);
+                label = Math.round(num*100)/100 + unit;
+            }
+            
             switch(cell.result.status) {
-            case 0: label_status = "success"; status = "OK"; break;
-            case 1: label_status = "warning"; status = "Warning"; break;
+            case 0: label_status = "success"; break;
+            case 1: label_status = "warning"; break;
             case 2: 
             case 3: 
-            case 4: 
-                status = "Error";
+                label = "Error";
                 label_status = "important";break;
+                break;
+            case 4: 
+                label = "Timeout";
+                label_status = "inverse";break;
+                break;
             }
 
             //construct information to display in popover
@@ -139,7 +151,7 @@
 
             //put everything together
             var html = "<p><span data-title=\""+title+"\" data-content=\""+popover+"\" "+
-                "class=\"label label-"+label_status+"\">"+icon+" "+status+"</span></p>";
+                "class=\"label label-"+label_status+"\">"+icon+" "+label+"</span></p>";
             return html; 
         }
     };
