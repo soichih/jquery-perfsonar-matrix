@@ -142,10 +142,21 @@
             popover += cell.result.message;
             popover += "</pre>";
             popover += "<time class='pull-right'>"+cell.result.time+"</time>";
+
+            //show result
             popover += "<table class='table table-condensed'>";
-            for(var pkey in cell.parameters) {
-                var pvalue = cell.parameters[pkey];
-                popover += "<tr><th>"+pkey+"</th><td>"+pvalue+"</td></tr>";
+            if(cell.result.parameters.average) {
+                popover += "<table class='table table-condensed'>";
+                for(var pkey in cell.result.parameters) {
+                    var pvalue = cell.result.parameters[pkey];
+                    popover += "<tr><th>"+pkey+"</th><td>"+pvalue+"</td></tr>";
+                }
+            } else {
+                //show parameters
+                for(var pkey in cell.parameters) {
+                    var pvalue = cell.parameters[pkey];
+                    popover += "<tr><th>"+pkey+"</th><td>"+pvalue+"</td></tr>";
+                }
             }
             popover += "</table>";
 
