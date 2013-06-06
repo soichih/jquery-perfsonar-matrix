@@ -46,3 +46,7 @@ cursor: pointer;
 .popover-inner{
 min-width: 600px;
 }
+.pf-m-sourcedest span.label {
+font-size: 130%;
+}
+

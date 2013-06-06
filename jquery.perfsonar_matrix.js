@@ -105,6 +105,8 @@
         render_result: function(json, cell, icon) {
 
             //popover titl
+            //var title = "";
+
             var title = json.statusLabels[cell.result.status];
             //title += cell.type
             //title += " from " + cell.parameters.source + " to " + cell.parameters.destination;
@@ -115,10 +117,12 @@
             //var status = json.statusLabels[cell.result.status];
             var label = cell.result.parameters.average;
             //truncate some numbers
-            if(label != undefined && label.length>7) {
-                var num = label.substr(0,label.length-4);
-                var unit = label.substr(label.length-4);
-                label = Math.round(num*100)/100 + unit;
+            //if(label != undefined && label.length>7) {
+            if(label != undefined) {
+                //var num = label.substr(0,label.length-4);
+                var num = label.replace(/[a-zA-Z]/g, '');
+                var unit = label.replace(/[\.0-9]/g,'');
+                label = Math.round(num*10)/10 + " " +unit;
             }
             
             switch(cell.result.status) {
@@ -137,11 +141,19 @@
 
             //construct information to display in popover
             var popover = "";
+
+            //show source / dest
+            popover += "<p class='pf-m-sourcedest'>";
+            popover += "<b>"+cell.parameters.source+"</b>";
+            popover += "<span> <i class='icon-arrow-right'/> </span>";
+            popover += "<b>"+cell.parameters.destination+"</b>";
+            popover += "</p><br>";
+
             //popover += "<h4>"+json.statusLabels[cell.result.status]+"</h4><p>"+cell.result.message+"</p><br>";
             popover += "<pre>";
             popover += cell.result.message;
             popover += "</pre>";
-            popover += "<time class='pull-right'>"+cell.result.time+"</time>";
+            popover += "<time class='pull-right'>"+cell.result.time+"</time><br clear='both'>";
 
             //show result
             popover += "<table class='table table-condensed'>";
