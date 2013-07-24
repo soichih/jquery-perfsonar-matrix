@@ -14,7 +14,7 @@
     // Create the defaults once
     var pluginName = "perfsonar_matrix",
         defaults = {
-            src: "http://soichi6.grid.iu.edu/vopfmatrix/matrix?id=580" //just an example..
+            src: "http://soichi6.grid.iu.edu/myosg/vopfmatrix/matrix?id=627" //just an example..
         };
 
     // The actual plugin constructor
