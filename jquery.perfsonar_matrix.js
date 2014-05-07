@@ -75,10 +75,7 @@
                     if(json.matrix[rid][cid][0].result != undefined) {
                         html += "<td>";
                         var cell_forward = json.matrix[rid][cid][0];//TODO right order?
-                        //html += this.render_result(json, cell_forward, "<i class=\"icon-arrow-right\"/>");
-                        html += this.render_result(json, cell_forward, "");
-                        //var cell_back = json.matrix[rid][cid][1];//TODO right order?
-                        //html += this.render_result(json, cell_back, "<i class=\"icon-arrow-left\"/>");
+                        html += this.render_result(json, cell_forward);
                         html += "</td>";
                     } else {
                         html += "<td></td>";
@@ -102,22 +99,14 @@
             });
         },
 
-        render_result: function(json, cell, icon) {
-
-            //popover titl
-            //var title = "";
+        render_result: function(json, cell) {
 
             var title = json.statusLabels[cell.result.status];
-            //title += cell.type
-            //title += " from " + cell.parameters.source + " to " + cell.parameters.destination;
-            title += "<button type='button' class='close' onclick='$(&quot;.label&quot;).popover(&quot;hide&quot;);'>&times;</button>";
+            //title += "<button type='button' class='close' onclick='$(&quot;.label&quot;).popover(&quot;hide&quot;);'>&times;</button>";
 
             //figure what to put in front label
             var label_status = "inverse"; //unknown
-            //var status = json.statusLabels[cell.result.status];
             var label = cell.result.parameters.average;
-            //truncate some numbers
-            //if(label != undefined && label.length>7) {
             if(label != undefined) {
                 //var num = label.substr(0,label.length-4);
                 var num = label.replace(/[a-zA-Z]/g, '');
@@ -140,16 +129,22 @@
             }
 
             //construct information to display in popover
-            var popover = "";
-
+            var popover = "<div id=\"pf-"+cell.id+"\" class=\"modal hide fade\" data-backdrop=\"false\">";
+            popover += "<div class=\"modal-header\">";
+            popover += "<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>";
+            popover += "<h3 class=\"modal-title\">";
             //show source / dest
             popover += "<p class='pf-m-sourcedest'>";
             popover += "<b>"+cell.parameters.source+"</b>";
             popover += "<span> <i class='icon-arrow-right'/> </span>";
             popover += "<b>"+cell.parameters.destination+"</b>";
-            popover += "</p><br>";
+            popover += "</p>";
+            popover += "</h3>"; //modal-title
+            popover += "</div>";//modal-header
 
-            //popover += "<h4>"+json.statusLabels[cell.result.status]+"</h4><p>"+cell.result.message+"</p><br>";
+            popover += "<div class=\"modal-body\">";
+            popover += "<p><span class=\"label label-"+label_status+"\">"+label+"</span> ";
+            popover += title+"</p>";
             popover += "<pre>";
             popover += cell.result.message;
             popover += "</pre>";
@@ -172,9 +167,12 @@
             }
             popover += "</table>";
 
+            popover += "</div>";//modal-body
+            popover += "</div>";//modal
+
             //put everything together
-            var html = "<p><span data-title=\""+title+"\" data-content=\""+popover+"\" "+
-                "class=\"label label-"+label_status+"\">"+icon+" "+label+"</span></p>";
+            var html = "<p><a href=\"#pf-"+cell.id+"\" class=\"label label-"+label_status+"\" data-toggle=\"modal\">"+label+"</a></p>";
+            html += popover;
             return html; 
         }
     };
